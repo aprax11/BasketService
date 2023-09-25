@@ -1,14 +1,17 @@
 package com.example.BasketService.core.domain.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @Entity
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BasketEntity {
 
     @Id
