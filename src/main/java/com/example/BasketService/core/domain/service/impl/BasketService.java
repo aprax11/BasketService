@@ -64,7 +64,7 @@ public class BasketService implements IBasketService {
 
         log.info("adding component to basket: {}", basketComponent);
 
-        String username = basketComponent.getUsername();
+        UUID username = basketComponent.getUsername();
         BasketEntity basketEntity = new BasketEntity();
 
         if(isExistsBasket(username)){
@@ -113,12 +113,12 @@ public class BasketService implements IBasketService {
         return Statics.DELETE_RESPONSE;
     }
     @Override
-    public Basket getBasketFromUser(String username){
+    public Basket getBasketFromUser(UUID username){
 
         log.info("getting basket for user: {}", username);
 
         if(isExistsBasket(username)){
-
+            log.info("tying to get basket");
             Basket ret = fromEntity(basketRepository.findBasketById(username).get());
 
             return ret;
@@ -130,14 +130,20 @@ public class BasketService implements IBasketService {
     public Basket fromEntity(BasketEntity entity){
         int price = 0;
         for (Product p: entity.getProducts()) {
-            price += p.getPrice();
+            int itemPrice = 0;
+            try{
+               itemPrice = Integer.parseInt(p.getPrice().substring(0, p.getPrice().length() - 1));
+            }catch (Exception e){
+                log.error("unexpected error during price calculation");
+            }
+            price += itemPrice;
         };
         return new Basket(entity.getUsername(), entity.getProducts(), price);
     }
     private boolean isExistsProduct(UUID id) {
         return productRepository.existsById(id);
     }
-    private boolean isExistsBasket(String username) {
+    private boolean isExistsBasket(UUID username) {
         return basketRepository.existsById(username);
     }
 }

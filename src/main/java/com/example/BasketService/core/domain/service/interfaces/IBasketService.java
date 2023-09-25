@@ -19,7 +19,7 @@ public interface IBasketService {
 
     String deleteFromBasket(BasketComponent basketComponent);
 
-    Basket getBasketFromUser(String username);
+    Basket getBasketFromUser(UUID username);
 
     Basket fromEntity(BasketEntity entity);
 }

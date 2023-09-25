@@ -2,6 +2,7 @@ package com.example.BasketService.port.listener;
 
 import com.example.BasketService.core.domain.model.BasketComponent;
 import com.example.BasketService.core.domain.model.Product;
+import com.example.BasketService.core.domain.model.Basket;
 import com.example.BasketService.core.domain.service.interfaces.IBasketService;
 import com.google.gson.Gson;
 import lombok.Data;
@@ -46,7 +47,7 @@ public class Listener {
                     return deleteProduct(id);
                 }
                 case GET_BASKET: {
-                    String username = extractBodyOfMessage(message);
+                    UUID username = extractIdFromMessage(message);
                     log.info("getBasket request processed");
                     return getBasket(username);
                 }
@@ -81,7 +82,9 @@ public class Listener {
         Product createdProduct = basketService.createProduct(product);
         return new Gson().toJson(createdProduct);
     }
-    private String getBasket(String username){
+    private String getBasket(UUID username){
+        Basket basket = basketService.getBasketFromUser(username);
+        log.info("Basket to get: {}", basket);
         return new Gson().toJson(basketService.getBasketFromUser(username));
     }
     private String addToBasket(BasketComponent basketComponent){

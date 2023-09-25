@@ -4,13 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "BasketProduct")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -19,7 +23,7 @@ public class Product {
 
     private String name;
 
-    private int price;
+    private String price;
 
     private String image;
 

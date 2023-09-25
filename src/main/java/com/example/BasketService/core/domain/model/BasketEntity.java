@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -16,7 +17,7 @@ public class BasketEntity {
 
     @Id
     @Column(unique = true, nullable = false)
-    private String username;
+    private UUID username;
 
     @JoinTable
     @ManyToMany
