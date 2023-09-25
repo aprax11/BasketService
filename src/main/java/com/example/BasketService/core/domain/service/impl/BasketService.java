@@ -88,23 +88,23 @@ public class BasketService implements IBasketService {
         return basketComponent;
     }
     @Override
-    public String deleteFromBasket(UUID id, String username) {
+    public String deleteFromBasket(BasketComponent basketComponent) {
 
-        log.info("deleting component, with id: {} from basket", id);
+        log.info("deleting component: {} from basket", basketComponent);
 
-        BasketEntity basketEntity = basketRepository.findBasketById(username).get();
+        BasketEntity basketEntity = basketRepository.findBasketById(basketComponent.getUsername()).get();
 
         List<Product> products = new ArrayList<>();
 
         for (Product p: basketEntity.getProducts()
              ) {
-            if(p.getId().compareTo(id) != 0){
+            if(p.getId().compareTo(basketComponent.getProductID()) != 0){
                 products.add(p);
             }
         }
 
         if(products.isEmpty()){
-            basketRepository.deleteById(username);
+            basketRepository.deleteById(basketComponent.getUsername());
         }else {
             basketEntity.setProducts(products);
 

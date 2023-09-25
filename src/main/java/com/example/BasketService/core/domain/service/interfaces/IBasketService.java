@@ -17,7 +17,7 @@ public interface IBasketService {
 
     BasketComponent addToBasket(BasketComponent basketComponent);
 
-    String deleteFromBasket(UUID id, String username);
+    String deleteFromBasket(BasketComponent basketComponent);
 
     Basket getBasketFromUser(String username);
 
