@@ -16,7 +16,7 @@ public class BasketEntity {
     private String username;
 
     @JoinTable
-    @OneToMany
+    @ManyToMany
     private List<Product> products;
 
 }
