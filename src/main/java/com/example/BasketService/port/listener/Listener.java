@@ -50,12 +50,12 @@ public class Listener {
                     log.info("getBasket request processed");
                     return getBasket(username);
                 }
-                case ADDTOBASKET: {
+                case ADD_TO_BASKET: {
                     BasketComponent basketComponent = createBasketComponentFromMessage(message);
                     log.info("add component to Basket request processed");
                     return addToBasket(basketComponent);
                 }
-                case DELETEFROMBASKET: {
+                case DELETE_FROM_BASKET: {
                     BasketComponent basketComponent = createBasketComponentFromMessage(message);
                     log.info("get all products request processed");
                     return deleteFromBasket(basketComponent);
