@@ -19,7 +19,7 @@ import java.util.UUID;
 @Controller
 public class Listener {
     private final IBasketService basketService;
-    @RabbitListener(queues = {"product-service.rpc.queue"})
+    @RabbitListener(queues = {"basket-service.rpc.queue"})
     public String handleRequest(Message message){
         log.info("receiveMessage triggered");
         final MessageType messageType;

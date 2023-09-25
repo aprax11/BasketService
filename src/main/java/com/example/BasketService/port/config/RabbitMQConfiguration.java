@@ -22,12 +22,8 @@ public class RabbitMQConfiguration {
 
     @Value("exchange.rpc")
     private String directXchangeName;
-    @Value("product-service.rpc.key")
-    private String productServiceRoutingKey;
     @Value("basket-service.rpc.key")
     private String priceServiceRoutingKey;
-    @Value("product-service.rpc.queue")
-    private String productServiceQueueName;
     @Value("basket-service.rpc.queue")
     private String priceServiceQueueName;
 
@@ -37,22 +33,12 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Queue productServiceQueue() {
-        return new Queue(productServiceQueueName);
-    }
-
-    @Bean
-    public Queue priceServiceQueue() {
+    public Queue basketServiceQueue() {
         return new Queue(priceServiceQueueName);
     }
 
     @Bean
-    public Binding productServiceBinding(DirectExchange directExchange, Queue productServiceQueue) {
-        return BindingBuilder.bind(productServiceQueue).to(directExchange).with(productServiceRoutingKey);
-    }
-
-    @Bean
-    public Binding priceServiceBinding(DirectExchange directExchange, Queue priceServiceQueue) {
+    public Binding basketServiceBinding(DirectExchange directExchange, Queue priceServiceQueue) {
         return BindingBuilder.bind(priceServiceQueue).to(directExchange).with(priceServiceRoutingKey);
     }
 
