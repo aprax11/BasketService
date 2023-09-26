@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IBasketRepository extends JpaRepository<BasketEntity, UUID> {
-    @Query("SELECT b FROM BasketEntity b WHERE b.username = ?1")
-    Optional<BasketEntity> findBasketById(UUID username);
+
+
 }

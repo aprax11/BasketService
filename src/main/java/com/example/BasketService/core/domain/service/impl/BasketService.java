@@ -64,11 +64,12 @@ public class BasketService implements IBasketService {
 
         log.info("adding component to basket: {}", basketComponent);
 
-        UUID username = basketComponent.getUsername();
+        UUID userId = basketComponent.getUserId();
         BasketEntity basketEntity = new BasketEntity();
 
-        if(isExistsBasket(username)){
-            basketEntity = basketRepository.findBasketById(username).get();
+        if(isExistsBasket(userId)){
+
+            basketEntity = filterResultByUser(basketComponent.getUserId());
 
             List<Product> products = basketEntity.getProducts();
 
@@ -80,7 +81,7 @@ public class BasketService implements IBasketService {
             List<Product> products = new ArrayList<>();
             products.add(basketComponent.getProduct());
 
-            basketEntity.setUsername(username);
+            basketEntity.setUserId(userId);
             basketEntity.setProducts(products);
         }
         basketRepository.save(basketEntity);
@@ -92,7 +93,7 @@ public class BasketService implements IBasketService {
 
         log.info("deleting component: {} from basket", basketComponent);
 
-        BasketEntity basketEntity = basketRepository.findBasketById(basketComponent.getUsername()).get();
+        BasketEntity basketEntity = filterResultByUser(basketComponent.getUserId());
 
         List<Product> products = new ArrayList<>();
 
@@ -104,7 +105,7 @@ public class BasketService implements IBasketService {
         }
 
         if(products.isEmpty()){
-            basketRepository.deleteById(basketComponent.getUsername());
+            basketRepository.deleteById(basketComponent.getUserId());
         }else {
             basketEntity.setProducts(products);
 
@@ -113,13 +114,13 @@ public class BasketService implements IBasketService {
         return Statics.DELETE_RESPONSE;
     }
     @Override
-    public Basket getBasketFromUser(UUID username){
+    public Basket getBasketFromUser(UUID userId){
 
-        log.info("getting basket for user: {}", username);
+        log.info("getting basket for user: {}", userId);
 
-        if(isExistsBasket(username)){
+        if(isExistsBasket(userId)){
             log.info("tying to get basket");
-            Basket ret = fromEntity(basketRepository.findBasketById(username).get());
+            Basket ret = fromEntity(filterResultByUser(userId));
 
             return ret;
         }else{
@@ -138,7 +139,14 @@ public class BasketService implements IBasketService {
             }
             price += itemPrice;
         };
-        return new Basket(entity.getUsername(), entity.getProducts(), price);
+        return new Basket(entity.getUserId(), entity.getProducts(), price);
+    }
+    private BasketEntity filterResultByUser(UUID userId){
+
+        return basketRepository.findAll()
+                .stream()
+                .filter(productEntity -> productEntity.getUserId().compareTo(userId)== 0)
+                .toList().get(0);
     }
     private boolean isExistsProduct(UUID id) {
         return productRepository.existsById(id);
