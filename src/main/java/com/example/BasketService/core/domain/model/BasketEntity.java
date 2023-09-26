@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "BasketEntity", schema = "basket")
 @AllArgsConstructor
 @NoArgsConstructor
 public class BasketEntity {
@@ -19,7 +20,7 @@ public class BasketEntity {
     private UUID userId;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable
+    @JoinTable(schema="basket")
     private List<Product> products;
 
 }
