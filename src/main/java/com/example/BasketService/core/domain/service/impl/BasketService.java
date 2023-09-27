@@ -1,9 +1,6 @@
 package com.example.BasketService.core.domain.service.impl;
 
-import com.example.BasketService.core.domain.model.Basket;
-import com.example.BasketService.core.domain.model.BasketComponent;
-import com.example.BasketService.core.domain.model.BasketEntity;
-import com.example.BasketService.core.domain.model.Product;
+import com.example.BasketService.core.domain.model.*;
 import com.example.BasketService.core.domain.service.Statics;
 import com.example.BasketService.core.domain.service.interfaces.IBasketRepository;
 import com.example.BasketService.core.domain.service.interfaces.IBasketService;
@@ -13,9 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -129,16 +124,41 @@ public class BasketService implements IBasketService {
     @Override
     public Basket fromEntity(BasketEntity entity){
         int price = 0;
+
+        Map<String, BasketItem> productsMap = new HashMap<>();
+
         for (Product p: entity.getProducts()) {
-            int itemPrice = 0;
-            try{
-               itemPrice = Integer.parseInt(p.getPrice().substring(0, p.getPrice().length() - 1));
-            }catch (Exception e){
-                log.error("unexpected error during price calculation");
-            }
+
+            int itemPrice = parsePriceOfProduct(p);
             price += itemPrice;
+
+            String key = p.getId().toString();
+            if(productsMap.containsKey(key)){
+
+                BasketItem item = productsMap.get(p.getId().toString());
+                item.setCount(item.getCount()+1);
+
+                productsMap.put(key, item);
+            }else{
+
+                BasketItem newItem = new BasketItem(p.getId(), p.getName(), p.getPrice(), p.getImage(), 1);
+                productsMap.put(key, newItem);
+            }
+
         };
-        return new Basket(entity.getUserId(), entity.getProducts(), price);
+        return new Basket(entity.getUserId(), productsMap.values().stream().toList(), price);
+    }
+    private int parsePriceOfProduct(Product product){
+        int ret = 0;
+
+        try{
+
+            ret = Integer.parseInt(product.getPrice().substring(0, product.getPrice().length() - 1));
+         }catch (Exception e)
+        {
+                log.error("unexpected error during price calculation");
+        }
+        return ret;
     }
     private BasketEntity filterResultByUser(UUID userId){
 

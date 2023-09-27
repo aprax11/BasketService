@@ -4,19 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Basket {
+public class BasketItem {
+    private UUID id;
 
-    private UUID userId;
+    private String name;
 
-    private List<BasketItem> products;
+    private String price;
 
-    private int totalPrice;
+    private String image;
 
-
+    private int count;
 }
