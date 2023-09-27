@@ -145,7 +145,7 @@ public class BasketService implements IBasketService {
                 productsMap.put(key, newItem);
             }
 
-        };
+        }
         return new Basket(entity.getUserId(), productsMap.values().stream().toList(), price);
     }
     private int parsePriceOfProduct(Product product){
