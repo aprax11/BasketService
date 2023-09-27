@@ -31,7 +31,6 @@ public class BasketService implements IBasketService {
 
         log.info("saving Product: {}", product);
 
-        product.setId(UUID.randomUUID());
         productRepository.save(product);
         return product;
     }

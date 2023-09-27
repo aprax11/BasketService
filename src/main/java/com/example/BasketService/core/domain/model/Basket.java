@@ -3,7 +3,6 @@ package com.example.BasketService.core.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Basket {
 
-    private UUID userName;
+    private UUID userId;
 
     private List<Product> products;
 

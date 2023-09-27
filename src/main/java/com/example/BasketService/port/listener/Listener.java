@@ -52,8 +52,9 @@ public class Listener {
                     return getBasket(username);
                 }
                 case ADD_TO_BASKET: {
-                    BasketComponent basketComponent = createBasketComponentFromMessage(message);
                     log.info("add component to Basket request processed");
+                    BasketComponent basketComponent = createBasketComponentFromMessage(message);
+                    log.info("got basket component");
                     return addToBasket(basketComponent);
                 }
                 case DELETE_FROM_BASKET: {
@@ -103,7 +104,9 @@ public class Listener {
         return new Gson().fromJson(extractBodyOfMessage(message), Product.class);
     }
     private BasketComponent createBasketComponentFromMessage(Message message) {
-        return new Gson().fromJson(extractBodyOfMessage(message), BasketComponent.class);
+        BasketComponent gotComponent = new Gson().fromJson(extractBodyOfMessage(message), BasketComponent.class);
+        log.info("deserialized component: {}", gotComponent);
+        return gotComponent;
     }
     private String errorResponse() {
         log.error("respond with message 'errorResponse'");
