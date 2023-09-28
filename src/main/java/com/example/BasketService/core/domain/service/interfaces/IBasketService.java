@@ -22,4 +22,6 @@ public interface IBasketService {
     Basket getBasketFromUser(UUID username);
 
     Basket fromEntity(BasketEntity entity);
+
+    BasketEntity toEntity(Basket basket);
 }

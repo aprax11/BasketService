@@ -62,7 +62,6 @@ public class BasketService implements IBasketService {
         BasketEntity basketEntity = new BasketEntity();
 
         if(isExistsBasket(userId)){
-
             basketEntity = filterResultByUser(basketComponent.getUserId());
 
             List<Product> products = basketEntity.getProducts();
@@ -89,21 +88,19 @@ public class BasketService implements IBasketService {
 
         BasketEntity basketEntity = filterResultByUser(basketComponent.getUserId());
 
-        List<Product> products = new ArrayList<>();
+        Basket basket = fromEntity(basketEntity);
 
-        for (Product p: basketEntity.getProducts()
-             ) {
-            if(p.getId().compareTo(basketComponent.getProductID()) != 0){
-                products.add(p);
-            }
-        }
+        Map<UUID, Integer> counts = basket.getCountsOfItems();
 
-        if(products.isEmpty()){
+        int newCount = counts.get(basketComponent.getProductID()) - 1;
+
+        if(newCount == 0){
             basketRepository.deleteById(basketComponent.getUserId());
-        }else {
-            basketEntity.setProducts(products);
 
-            basketRepository.save(basketEntity);
+        }else {
+            basket.setCountForItem(basketComponent.getProductID(), newCount);
+
+            basketRepository.save(toEntity(basket));
         }
         return Statics.DELETE_RESPONSE;
     }
@@ -147,6 +144,21 @@ public class BasketService implements IBasketService {
 
         }
         return new Basket(entity.getUserId(), productsMap.values().stream().toList(), price);
+    }
+    @Override
+    public BasketEntity toEntity(Basket basket){
+
+        List<Product> products = new ArrayList<>();
+
+        for (BasketItem basketItem: basket.getProducts()
+             ) {
+            Product product = new Product(basketItem.getId(), basketItem.getName(), basketItem.getPrice(), basketItem.getImage());
+            for (int i = 0; i < basketItem.getCount(); i++){
+                products.add(product);
+            }
+        }
+
+        return new BasketEntity(basket.getUserId(), products);
     }
     private int parsePriceOfProduct(Product product){
         int ret = 0;
