@@ -130,7 +130,7 @@ public class BasketService implements IBasketService {
 
         for (Product p: entity.getProducts()) {
 
-            int itemPrice = parsePriceOfProduct(p);
+            int itemPrice = Basket.parsePriceOfItem(p);
             price += itemPrice;
 
             String key = p.getId().toString();
@@ -162,18 +162,7 @@ public class BasketService implements IBasketService {
         }
         return new BasketEntity(basket.getUserId(), products);
     }
-    private int parsePriceOfProduct(Product product){
 
-        int ret = 0;
-
-        try{
-            ret = Integer.parseInt(product.getPrice().substring(0, product.getPrice().length() - 1));
-         }catch (Exception e)
-        {
-            log.error("unexpected error during price calculation");
-        }
-        return ret;
-    }
     private BasketEntity filterResultByUser(UUID userId){
 
         return basketRepository.findAll()

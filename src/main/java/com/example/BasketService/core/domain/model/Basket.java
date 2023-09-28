@@ -3,6 +3,7 @@ package com.example.BasketService.core.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class Basket {
 
     private UUID userId;
@@ -36,5 +38,17 @@ public class Basket {
                 basketItem.setCount(newCount);
             }
         }
+    }
+    public static int parsePriceOfItem(Product product){
+
+        int ret = 0;
+
+        try{
+            ret = Integer.parseInt(product.getPrice().substring(0, product.getPrice().length() - 1));
+        }catch (Exception e)
+        {
+            log.error("unexpected error during price calculation");
+        }
+        return ret;
     }
 }
