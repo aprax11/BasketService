@@ -59,7 +59,7 @@ public class Listener {
                 }
                 case DELETE_FROM_BASKET: {
                     BasketComponent basketComponent = createBasketComponentFromMessage(message);
-                    log.info("get all products request processed");
+                    log.info("delete from basket request processed");
                     return deleteFromBasket(basketComponent);
                 }
                 default: {
@@ -85,14 +85,13 @@ public class Listener {
     }
     private String getBasket(UUID username){
         Basket basket = basketService.getBasketFromUser(username);
-        log.info("Basket to get: {}", basket);
         return new Gson().toJson(basketService.getBasketFromUser(username));
     }
     private String addToBasket(BasketComponent basketComponent){
         return new Gson().toJson(basketService.addToBasket(basketComponent));
     }
     private String deleteFromBasket(BasketComponent basketComponent){
-        return new Gson().toJson(basketService.addToBasket(basketComponent));
+        return new Gson().toJson(basketService.deleteFromBasket(basketComponent));
     }
     private String extractBodyOfMessage(Message message) {
         return new String(message.getBody(), StandardCharsets.UTF_8);
@@ -105,7 +104,6 @@ public class Listener {
     }
     private BasketComponent createBasketComponentFromMessage(Message message) {
         BasketComponent gotComponent = new Gson().fromJson(extractBodyOfMessage(message), BasketComponent.class);
-        log.info("deserialized component: {}", gotComponent);
         return gotComponent;
     }
     private String errorResponse() {
