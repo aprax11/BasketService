@@ -1,4 +1,4 @@
-package com.example.BasketService;
+package com.example.BasketService.port.listener;
 
 import com.example.BasketService.core.domain.model.BasketComponent;
 import com.example.BasketService.core.domain.model.Product;

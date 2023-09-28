@@ -1,4 +1,4 @@
-package com.example.BasketService;
+package com.example.BasketService.core.domain.model;
 
 import com.example.BasketService.core.domain.model.Basket;
 import com.example.BasketService.core.domain.model.BasketItem;
