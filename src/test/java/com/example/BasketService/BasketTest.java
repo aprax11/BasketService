@@ -40,5 +40,11 @@ public class BasketTest {
         assertEquals(1, basket.getProducts().size());
         assertEquals(22, basket.getTotalPrice());
     }
+    @Test
+    void parsePriceOfItemTest(){
+        int price = Basket.parsePriceOfItem(TEST_BASKET_ITEM.getPrice());
+
+        assertEquals(22, price);
+    }
 
 }

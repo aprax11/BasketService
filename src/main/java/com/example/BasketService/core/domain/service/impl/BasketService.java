@@ -130,7 +130,7 @@ public class BasketService implements IBasketService {
 
         for (Product p: entity.getProducts()) {
 
-            int itemPrice = Basket.parsePriceOfItem(p);
+            int itemPrice = Basket.parsePriceOfItem(p.getPrice());
             price += itemPrice;
 
             String key = p.getId().toString();

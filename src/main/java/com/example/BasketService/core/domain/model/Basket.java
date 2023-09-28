@@ -38,17 +38,27 @@ public class Basket {
                 basketItem.setCount(newCount);
             }
         }
+        recalculatePrice();
     }
-    public static int parsePriceOfItem(Product product){
+    public static int parsePriceOfItem(String price){
 
         int ret = 0;
 
         try{
-            ret = Integer.parseInt(product.getPrice().substring(0, product.getPrice().length() - 1));
+            ret = Integer.parseInt(price.substring(0, price.length() - 1));
         }catch (Exception e)
         {
             log.error("unexpected error during price calculation");
         }
         return ret;
+    }
+    private void recalculatePrice(){
+        int newTotalPrice = 0;
+
+        for (BasketItem item: products
+             ) {
+            newTotalPrice += parsePriceOfItem(item.getPrice());
+        }
+        this.totalPrice = newTotalPrice;
     }
 }

@@ -85,7 +85,7 @@ public class Listener {
     }
     private String getBasket(UUID username){
         Basket basket = basketService.getBasketFromUser(username);
-        return new Gson().toJson(basketService.getBasketFromUser(username));
+        return new Gson().toJson(basket);
     }
     private String addToBasket(BasketComponent basketComponent){
         return new Gson().toJson(basketService.addToBasket(basketComponent));
