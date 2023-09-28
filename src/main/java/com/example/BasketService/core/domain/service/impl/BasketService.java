@@ -123,6 +123,7 @@ public class BasketService implements IBasketService {
     }
     @Override
     public Basket fromEntity(BasketEntity entity){
+
         int price = 0;
 
         Map<String, BasketItem> productsMap = new HashMap<>();
@@ -144,7 +145,6 @@ public class BasketService implements IBasketService {
                 BasketItem newItem = new BasketItem(p.getId(), p.getName(), p.getPrice(), p.getImage(), 1);
                 productsMap.put(key, newItem);
             }
-
         }
         return new Basket(entity.getUserId(), productsMap.values().stream().toList(), price);
     }
@@ -160,18 +160,17 @@ public class BasketService implements IBasketService {
                 products.add(product);
             }
         }
-
         return new BasketEntity(basket.getUserId(), products);
     }
     private int parsePriceOfProduct(Product product){
+
         int ret = 0;
 
         try{
-
             ret = Integer.parseInt(product.getPrice().substring(0, product.getPrice().length() - 1));
          }catch (Exception e)
         {
-                log.error("unexpected error during price calculation");
+            log.error("unexpected error during price calculation");
         }
         return ret;
     }
