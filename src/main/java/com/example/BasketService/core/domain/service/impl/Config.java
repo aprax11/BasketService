@@ -16,34 +16,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class Config {
     @Bean
-    CommandLineRunner commandLineRunner(IBasketRepository basketRepository, IBasketService basketService){
+    CommandLineRunner commandLineRunner( IBasketService basketService){
         return args -> {
-            Product product1 = new Product(
-                    UUID.randomUUID(),
-                    "Ring",
-                    "22€",
-                    "1"
-            );
-            Product product2 = new Product(
-                    UUID.randomUUID(),
-                    "Kette",
-                    "22€",
-                    "1"
-            );
 
+            UUID user = UUID.fromString("d6e38053-872d-4d4a-b9e5-ce48cd749e62");
+            basketService.createEmptyBasketForUser(user);
 
-            basketService.createProduct(product1);
-            UUID user = UUID.randomUUID();
-            BasketComponent basketComponent = new BasketComponent(user, product1);
-//            basketService.createProduct(product2);
-//            BasketComponent basketComponent2 = new BasketComponent(user, product2);
-            basketService.addToBasket(basketComponent);
-            basketService.addToBasket(basketComponent);
-            log.info(String.valueOf(basketRepository.findAll()
-                    .stream()
-                    .filter(productEntity -> productEntity.getUserId().compareTo(basketComponent.getUserId())== 0)
-                    .collect(Collectors.toList()).get(0)));
-//            basketService.addToBasket(basketComponent2);
         };
     }
 }

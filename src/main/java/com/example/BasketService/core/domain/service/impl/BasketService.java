@@ -54,6 +54,13 @@ public class BasketService implements IBasketService {
         }
     }
     @Override
+    public void createEmptyBasketForUser(UUID userId){
+
+        BasketEntity basketEntity = new BasketEntity(userId, new ArrayList<Product>());
+
+        basketRepository.save(basketEntity);
+    }
+    @Override
     public BasketComponent addToBasket(BasketComponent basketComponent) {
 
         log.info("adding component to basket: {}", basketComponent);
@@ -94,14 +101,10 @@ public class BasketService implements IBasketService {
 
         int newCount = counts.get(basketComponent.getProductID()) - 1;
 
-        if(newCount == 0){
-            basketRepository.deleteById(basketComponent.getUserId());
+        basket.setCountForItem(basketComponent.getProductID(), newCount);
 
-        }else {
-            basket.setCountForItem(basketComponent.getProductID(), newCount);
+        basketRepository.save(toEntity(basket));
 
-            basketRepository.save(toEntity(basket));
-        }
         return Statics.DELETE_RESPONSE;
     }
     @Override

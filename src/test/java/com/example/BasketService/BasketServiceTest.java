@@ -58,4 +58,9 @@ public class BasketServiceTest {
 
         assertEquals(1, capturedBasketEntity.getProducts().size());
     }
+
+    @Test
+    void createEmptyBasketForUserTest(){
+
+    }
 }

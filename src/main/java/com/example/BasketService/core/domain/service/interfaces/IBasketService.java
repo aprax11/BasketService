@@ -15,6 +15,8 @@ public interface IBasketService {
 
     String deleteProduct(UUID id);
 
+    void createEmptyBasketForUser(UUID userId);
+
     BasketComponent addToBasket(BasketComponent basketComponent);
 
     String deleteFromBasket(BasketComponent basketComponent);
