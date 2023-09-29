@@ -1,24 +1,14 @@
 package com.example.BasketService.core.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
-
 @Data
-@Entity
-@Table(name = "BasketProduct", schema="basket")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-
-    @Id
-    @Column(unique = true, nullable = false)
+public class BasketItem {
     private UUID id;
 
     private String name;
@@ -27,4 +17,5 @@ public class Product {
 
     private String image;
 
+    private int count;
 }

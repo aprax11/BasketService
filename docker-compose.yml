@@ -1,0 +1,23 @@
+services:
+  app:
+    container_name: BasketService
+    command: java -jar target/BasketService-0.0.1-SNAPSHOT.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./:/app/app
+    networks:
+      - app-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
+      - spring_rabbitmq_host=rabbitmq-container
+      - spring_rabbitmq_port=5672
+
+networks:
+  app-network:
+    external:
+      name: app-network
+    driver: bridge
