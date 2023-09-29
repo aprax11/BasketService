@@ -31,9 +31,9 @@ public class BasketServiceTest {
     private BasketService basketService;
 
     private final UUID TEST_PRODUCT_UUID1 = UUID.fromString("514baee2-b42a-4f0d-9eba-8e82d2db968b");
-    private final Product TEST_PRODUCT1 = new Product(TEST_PRODUCT_UUID1, "testProduct1", "22€", "1");
+    private final Product TEST_PRODUCT1 = new Product(TEST_PRODUCT_UUID1, "testProduct1", "22", "1");
     private final UUID TEST_PRODUCT_UUID2 = UUID.fromString("923214f8-5111-481c-ba29-86dfe1c2fa0a");
-    private final Product TEST_PRODUCT2 = new Product(TEST_PRODUCT_UUID2, "testProduct2", "12€", "2");
+    private final Product TEST_PRODUCT2 = new Product(TEST_PRODUCT_UUID2, "testProduct2", "12", "2");
     private final String DELETE_RESPONSE = "deleting item";
     private final UUID TEST_USER_ID = UUID.fromString("d6e38053-872d-4d4a-b9e5-ce48cd749e62");
 
@@ -198,7 +198,7 @@ public class BasketServiceTest {
                 , TEST_PRODUCT1.getImage()
                 , 2);
 
-        int price = Integer.parseInt(TEST_PRODUCT1.getPrice().substring(0, TEST_PRODUCT1.getPrice().length() - 1));
+        int price = Integer.parseInt(TEST_PRODUCT1.getPrice());
 
         Basket expectedBasket = new Basket(TEST_USER_ID, List.of(expectedBasketItem),price*2);
 
@@ -223,8 +223,8 @@ public class BasketServiceTest {
                 , TEST_PRODUCT2.getImage()
                 , 1);
 
-        int price1 = Integer.parseInt(TEST_PRODUCT1.getPrice().substring(0, TEST_PRODUCT1.getPrice().length() - 1));
-        int price2 = Integer.parseInt(TEST_PRODUCT2.getPrice().substring(0, TEST_PRODUCT2.getPrice().length() - 1));
+        int price1 = Integer.parseInt(TEST_PRODUCT1.getPrice());
+        int price2 = Integer.parseInt(TEST_PRODUCT2.getPrice());
 
         Basket expectedBasket = new Basket(TEST_USER_ID, List.of(expectedBasketItem1, expectedBasketItem2),price1+price2);
 

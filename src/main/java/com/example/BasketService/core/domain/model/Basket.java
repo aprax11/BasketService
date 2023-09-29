@@ -45,7 +45,7 @@ public class Basket {
         int ret = 0;
 
         try{
-            ret = Integer.parseInt(price.substring(0, price.length() - 1));
+            ret = Integer.parseInt(price);
         }catch (Exception e)
         {
             log.error("unexpected error during price calculation");

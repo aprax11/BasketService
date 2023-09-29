@@ -17,7 +17,7 @@ public class BasketTest {
 
     private final UUID TEST_ITEM_UUID = UUID.randomUUID();
     private final UUID TEST_USER_ID = UUID.randomUUID();
-    private final BasketItem TEST_BASKET_ITEM = new BasketItem(TEST_ITEM_UUID, "testBasketItem", "22€", "1", 2);
+    private final BasketItem TEST_BASKET_ITEM = new BasketItem(TEST_ITEM_UUID, "testBasketItem", "22", "1", 2);
 
 
     @Test
